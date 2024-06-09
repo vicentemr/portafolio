@@ -1,0 +1,21 @@
+<header class="header">
+  <nav class="nav containerPersonal">
+      <a (click)="changeEstadoNav('Inicio')" class="nav_logo">Portafolio</a>
+
+      <div class="nav_menu" [ngClass]="showMenu ? 'show-menu ':'hide-menu'">
+          <ul class="nav_list grid">
+              <li class="nav_item" *ngFor="let item of itemsMenu">
+                  <a (click)="changeEstadoNav(item.nombre)" class="nav_link"
+                      [ngClass]="{'active': seleccionado === item.nombre}"><i class="{{item.icono}} nav_icon"></i>
+                      {{item.nombre}}</a>
+              </li>
+          </ul>
+          <fa-icon [icon]="faTimes" (click)="openAndCloseMenu()"></fa-icon>
+      </div>
+      <div class="nav_btns">
+          <!-- cambio de tema -->
+          <fa-icon [icon]="estadoTheme == 'inicial' ? faMoon : faSun" (click)="changeTheme()"></fa-icon>
+          <fa-icon [icon]="faBars" (click)="openAndCloseMenu()"></fa-icon>
+      </div>
+  </nav>
+</header>
