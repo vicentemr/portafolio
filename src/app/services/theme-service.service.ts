@@ -6,6 +6,7 @@ import {
   defaultTheme,
   green,
   pink,
+  blue,
   purple,
 } from '../interfaces/ThemeInterface';
 type DocumentType = Document;
@@ -21,6 +22,7 @@ export class ThemeServiceService {
     defaultTheme,
     green,
     pink,
+    blue,
     purple,
   ];
 
@@ -40,6 +42,10 @@ export class ThemeServiceService {
 
   setPink() {
     this.setActiveTheme(pink);
+  }
+
+  setBlue() {
+    this.setActiveTheme(blue);
   }
 
   setDarkTheme(): void {

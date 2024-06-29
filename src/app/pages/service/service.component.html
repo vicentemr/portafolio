@@ -1,1 +1,21 @@
-<p>service works!</p>
+<section class="services section">
+  <h2 class="section_title">Servicios</h2>
+  <span class="section_subtitle">Mis servicios</span>
+  <div class="services_container containerPersonal grid">
+      <!-- servicio 1 -->
+      <div class="services_content" *ngFor="let service  of dataServices">
+          <div>
+              <i class="{{service.icono}} services_icon"></i>
+              <h3 class="services_title">{{service.titulo1}}</h3>
+              <span class="skills_subtitle">{{service.titulo2}}</span>
+          </div>
+          <span class="button button--flex button--small button--link services_button">
+              Ver mas
+              <i class="fas fa-arrow-right button_icon"></i>
+          </span>
+
+
+      </div>
+
+  </div>
+</section>

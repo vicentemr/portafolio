@@ -183,6 +183,13 @@ button.top {
 .colorPink:hover {
   background-color: hsl(340, 45%, 45%);
 }
+.colorBlue {
+  cursor: pointer;
+  background-color: 	hsl(201, 78%, 23%);
+}
+.colorBlue:hover {
+  background-color: 	hsl(201, 78%, 25%);
+}
 .mostrarBotonColor {
   visibility: hidden;
   opacity: 0;

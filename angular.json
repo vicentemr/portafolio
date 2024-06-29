@@ -26,9 +26,12 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/css/main.scss"
+              "src/assets/css/main.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {

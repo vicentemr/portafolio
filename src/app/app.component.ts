@@ -13,11 +13,12 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { gsap } from 'gsap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPalette, faPaintRoller } from '@fortawesome/free-solid-svg-icons';
+import { ServiceComponent } from './pages/service/service.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, InicioComponent, HeaderComponent, FooterComponent, AboutComponent, SkillComponent, QualificationComponent, ContactComponent, PortfolioComponent, CommonModule, FontAwesomeModule],
+  imports: [RouterOutlet, InicioComponent, HeaderComponent, FooterComponent, AboutComponent, SkillComponent, QualificationComponent, ContactComponent, PortfolioComponent, CommonModule, FontAwesomeModule, ServiceComponent],
   providers: [DecimalPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -112,6 +113,10 @@ export class AppComponent implements OnInit {
 
   colorPink(): void {
     this.themeService.setPink();
+  }
+
+  colorBlue(): void {
+    this.themeService.setBlue();
   }
 
   public toggle(menu: HTMLElement) {
