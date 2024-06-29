@@ -9,12 +9,10 @@ import {
   blue,
   purple,
 } from '../interfaces/ThemeInterface';
-type DocumentType = Document;
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeServiceService {
-  private document !: DocumentType;
   private active!: Theme;
   private availableThemes: Theme[] = [
     light,
@@ -60,7 +58,9 @@ export class ThemeServiceService {
     this.active = theme;
 
     Object.keys(this.active.properties).forEach((property) => {
-      document.documentElement.style.setProperty(property, this.active.properties[property]);
+      if (typeof document !== 'undefined') (
+        document.documentElement.style.setProperty(property, this.active.properties[property])
+      )
     });
   }
 }
