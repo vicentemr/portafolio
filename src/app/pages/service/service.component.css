@@ -1,0 +1,37 @@
+.services_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  z-index: var(--z-modal);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+
+.services_modal-content {
+  position: relative;
+  background-color: var(--container-color);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: 420px;
+  width: 100%;
+}
+
+.active-modal {
+  opacity: 1;
+  visibility: visible;
+}
+
+.services_button {
+  background: none;
+  border: none;
+  font-family: var(--body-font);
+  cursor: pointer;
+}

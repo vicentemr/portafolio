@@ -1,255 +1,46 @@
-<section class="qualification section">
-  <h2 class="section_title">Experiencia</h2>
-  <span class="section_subtitle">Mi presentacion personal</span>
-  <div class="qualification_container containerPersonal">
-    <div class="qualification_tabs">
-      <div
-        (click)="cambioOpenLIst('educacion')"
-        class="qualification_button button--flex"
-        [ngClass]="{ qualification_active: openList === 'educacion' }"
-      >
-        <i class="fas fa-graduation-cap qualification_icon"></i>
-        Educacion
+<section class="section wrap">
+  <div class="two-col">
+    <div>
+      <div class="section-head">
+        <h2>Experiencia</h2>
+        <a class="btn-text" [href]="cv" download><app-icon name="download" [size]="18" /> Descargar CV</a>
       </div>
-
-      <div
-        (click)="cambioOpenLIst('trabajo')"
-        class="qualification_button button--flex"
-        [ngClass]="{ qualification_active: openList === 'trabajo' }"
-      >
-        <i class="fas fa-briefcase qualification_icon"></i>
-        Trabajo
-      </div>
+      <ul class="tl">
+        @for (job of jobs; track job.role + job.company) {
+          <li class="tl-item" [class.is-current]="job.current">
+            <span class="tl-marker"></span>
+            <div>
+              <div class="tl-role">
+                {{ job.role }}
+                @if (job.current) { <span class="tag">Actual</span> }
+              </div>
+              <div class="tl-meta"><b>{{ job.company }}</b> · {{ job.dates }}</div>
+            </div>
+          </li>
+        }
+      </ul>
     </div>
-
-    <div class="qualification_sections">
-      <!-- cualificacion contenido 1 -->
-      <div
-        class="qualification_content"
-        [ngClass]="{ qualification_active: openList === 'educacion' }"
-        data-content
-      >
-        <!-- contenido 1 -->
-        <div class="qualification_data">
-          <div>
-            <h3 class="qualification_title">
-              NetSuite Certified SuiteFoundation
-            </h3>
-            <span class="qualification_subtitle">Oracle Netsuite</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp;Diciembre 2023
-            </div>
-          </div>
-
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-        </div>
-
-        <!-- contenido 2 -->
-        <div class="qualification_data">
-          <div></div>
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-          <div>
-            <h3 class="qualification_title">
-              Microservices using Spring Cloud
-            </h3>
-            <span class="qualification_subtitle">Mitocode Network</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp;Marzo 2023
-            </div>
-          </div>
-        </div>
-
-        <!-- contenido 3 -->
-        <div class="qualification_data">
-          <div>
-            <h3 class="qualification_title">Docker Kubernetes Cloud</h3>
-            <span class="qualification_subtitle">Mitocode Network</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp;Noviembre 2022
-            </div>
-          </div>
-
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-        </div>
-
-        <!-- contenido 1 -->
-        <div class="qualification_data">
-          <div></div>
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-          <div>
-            <h3 class="qualification_title">Ingeniería de Sistemas</h3>
-            <span class="qualification_subtitle"
-              >Universidad Nacional Mayor de San Marcos</span
-            >
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp;Junio 2021
-            </div>
-          </div>
-        </div>
-
-        <!-- contenido 2 -->
-        <div class="qualification_data">
-          <div>
-            <h3 class="qualification_title">
-              Oracle Cloud Infrastructure Foundations
-            </h3>
-            <span class="qualification_subtitle"
-              >Oracle Cloud Infrastructure</span
-            >
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp;Febrero 2021
-            </div>
-          </div>
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-        </div>
-
-        <!-- contenido 3 -->
-        <div class="qualification_data">
-          <div></div>
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-          <div>
-            <h3 class="qualification_title">
-              Java Fullstack Spring Boot 2 - Angular 10
-            </h3>
-            <span class="qualification_subtitle">Mitocode Network</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp;Diciembre 2020
-            </div>
-          </div>
-        </div>
-
-        <!-- contenido 4 -->
-        <div class="qualification_data">
-          <div>
-            <h3 class="qualification_title">
-              International Certificate in English (FCE)
-            </h3>
-            <span class="qualification_subtitle">Cambridge University</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp;Julio 2017
-            </div>
-          </div>
-          <div>
-            <span class="qualification_rounder"></span>
-          </div>
-        </div>
+    <div>
+      <div class="section-head">
+        <h2>Herramientas</h2>
       </div>
-
-      <!-- cualificacion contenido 1 -->
-      <div
-        class="qualification_content"
-        [ngClass]="{ qualification_active: openList === 'trabajo' }"
-        data-content
-      >
-        <!-- contenido 1 -->
-        <div class="qualification_data">
-          <div>
-            <h3 class="qualification_title">Software Engineer, Netsuite</h3>
-            <span class="qualification_subtitle">BRING IT</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp; Marzo 2023 - actualidad
-            </div>
-          </div>
-
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
+      @for (group of stack; track group.group) {
+        <div class="stack-group">
+          <h3>{{ group.group }}</h3>
+          <div class="stack-list">
+            @for (item of group.items; track item.name) {
+              <span class="chip"><img [src]="item.logo" alt="" width="20" height="20">{{ item.name }}</span>
+            }
           </div>
         </div>
-
-        <!-- contenido 2 -->
-        <div class="qualification_data">
-          <div></div>
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-          <div>
-            <h3 class="qualification_title">Technology Analyst</h3>
-            <span class="qualification_subtitle">INFOSYS</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp; Junio 2022 - Marzo 2023 (10 meses)
-            </div>
-          </div>
-        </div>
-
-        <!-- contenido 3 -->
-        <div class="qualification_data">
-          <div>
-            <h3 class="qualification_title">Senior developer</h3>
-            <span class="qualification_subtitle">KEEP IT SIMPLE</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp; Febrero 2022 - Junio 2022 (5 meses)
-            </div>
-          </div>
-
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-        </div>
-
-        <div class="qualification_data">
-          <div></div>
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-          <div>
-            <h3 class="qualification_title">Netsuite developer</h3>
-            <span class="qualification_subtitle">KEEP IT SIMPLE</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp; Abril 2021 - Enero 2022 (10 meses)
-            </div>
-          </div>
-        </div>
-        <div class="qualification_data">
-          <div>
-            <h3 class="qualification_title">Java Programmer Analyst</h3>
-            <span class="qualification_subtitle">ENTELGY</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp; Diciembre 2020 - Marzo 2021 (4 meses)
-            </div>
-          </div>
-
-          <div>
-            <span class="qualification_rounder"></span>
-            <span class="qualification_line"></span>
-          </div>
-        </div>
-
-        <div class="qualification_data">
-          <div></div>
-          <div>
-            <span class="qualification_rounder"></span>
-            <!-- <span class="qualification_line"></span> -->
-          </div>
-          <div>
-            <h3 class="qualification_title">SuiteCloud developer</h3>
-            <span class="qualification_subtitle">LATAMREADY LLC</span>
-            <div class="qualification_calendar">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>&nbsp; Enero 2019 - Diciembre 2020 (2 años)
-            </div>
-          </div>
-        </div>
+      }
+      <div class="certs">
+        <h3>Certificaciones</h3>
+        <ul>
+          @for (cert of certs; track cert.title) {
+            <li><app-icon name="award" /><span><b>{{ cert.title }}</b>{{ cert.org }}</span><em>{{ cert.year }}</em></li>
+          }
+        </ul>
       </div>
     </div>
   </div>

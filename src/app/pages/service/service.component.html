@@ -2,20 +2,35 @@
   <h2 class="section_title">Servicios</h2>
   <span class="section_subtitle">Mis servicios</span>
   <div class="services_container containerPersonal grid">
-      <!-- servicio 1 -->
-      <div class="services_content" *ngFor="let service  of dataServices">
-          <div>
-              <i class="{{service.icono}} services_icon"></i>
-              <h3 class="services_title">{{service.titulo1}}</h3>
-              <span class="skills_subtitle">{{service.titulo2}}</span>
-          </div>
-          <span class="button button--flex button--small button--link services_button">
-              Ver mas
-              <i class="fas fa-arrow-right button_icon"></i>
-          </span>
 
-
+    <div class="services_content" *ngFor="let service of dataServices; let i = index">
+      <div>
+        <i class="{{service.icono}} services_icon"></i>
+        <h3 class="services_title">{{service.titulo1}}</h3>
+        <span class="skills_subtitle">{{service.titulo2}}</span>
       </div>
+      <button class="button button--flex button--small button--link services_button" (click)="openModal(i)">
+        Ver más
+        <i class="fas fa-arrow-right button_icon"></i>
+      </button>
+    </div>
 
   </div>
+
+  <div class="services_modal"
+       *ngFor="let service of dataServices; let i = index"
+       [ngClass]="{'active-modal': activeServiceIndex === i}"
+       (click)="closeModal()">
+    <div class="services_modal-content" (click)="$event.stopPropagation()">
+      <i class="fas fa-times services_modal-close" (click)="closeModal()"></i>
+      <h3 class="services_modal-title">{{service.titulo1}}</h3>
+      <div class="services_modal-services grid">
+        <div class="services_modal-service" *ngFor="let item of service.modalInfo">
+          <i class="fas fa-check-circle services_modal-icon"></i>
+          <p>{{item.nombre}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>

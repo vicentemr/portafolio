@@ -1,61 +1,58 @@
-<section class="contact section">
-  <h2 class="section_title">Contáctame</h2>
-  <span class="section_subtitle">Ponte en contacto</span>
-  <div class="contact_container containerPersonal grid">
-      <div>
-          <div class="contact_information">
-              <i class="fas fa-phone contact_icon"></i>
-              <div>
-                  <h3 class="contact_title">Teléfono</h3>
-                  <span class="contact_subtitle">+51 990579194</span>
-              </div>
+<section class="wrap">
+  <div class="cta">
+    <h2>¿Tienes un proyecto NetSuite en mente?</h2>
+    <p>Cuéntame qué necesitas —facturación electrónica, libros contables, integraciones o una app a medida— y lo conversamos.</p>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" [attr.aria-expanded]="showForm" aria-controls="contact-form"
+        (click)="showForm = !showForm">
+        <app-icon name="mail" [size]="18" /> Escríbeme
+      </button>
+      <a class="btn btn-ghost" [href]="profile.cv" download><app-icon name="download" [size]="18" /> Descargar CV</a>
+    </div>
 
+    @if (showForm) {
+      <form id="contact-form" [formGroup]="form" (ngSubmit)="onSubmit()" class="contact-form" novalidate>
+        <div class="contact-row">
+          <div class="field">
+            <label for="contact-nombre">Nombre</label>
+            <input id="contact-nombre" type="text" formControlName="nombre" autocomplete="name"
+              [class.is-invalid]="f['nombre'].invalid && f['nombre'].touched" />
+            @if (f['nombre'].invalid && f['nombre'].touched) { <span class="field-error">Ingresa tu nombre.</span> }
           </div>
-
-          <div class="contact_information">
-              <i class="fas fa-envelope contact_icon"></i>
-              <div>
-                  <h3 class="contact_title">Correo</h3>
-                  <span class="contact_subtitle">vomoro96&#64;gmail.com</span>
-              </div>
-
+          <div class="field">
+            <label for="contact-correo">Correo</label>
+            <input id="contact-correo" type="email" formControlName="correo" autocomplete="email"
+              [class.is-invalid]="f['correo'].invalid && f['correo'].touched" />
+            @if (f['correo'].invalid && f['correo'].touched) { <span class="field-error">Ingresa un correo válido.</span> }
           </div>
-
-          <div class="contact_information">
-              <i class="fas fa-map-marker-alt contact_icon"></i>
-              <div>
-                  <h3 class="contact_title">Ubicacion</h3>
-                  <span class="contact_subtitle">Lima, Perú. Jirón Julio Delgado 301. - ZIP: 15103</span>
-              </div>
-
-          </div>
-      </div>
-      <form action="" class="contact_form grid">
-          <div class="contact_inputs grid">
-              <div class="contact_content">
-                  <label for="Nombre" class="contact_label">Nombre</label>
-                  <input type="text" class="contact_input">
-              </div>
-              <div class="contact_content">
-                  <label for="Nombre" class="contact_label">Correo</label>
-                  <input type="email" class="contact_input">
-              </div>
-          </div>
-          <div class="contact_content">
-              <label for="Nombre" class="contact_label">Proyecto</label>
-              <input type="text" class="contact_input">
-          </div>
-          <div class="contact_content">
-              <label for="Nombre" class="contact_label">Mensaje</label>
-              <textarea name="" id="" cols="0" rows="7" class="contact_input"></textarea>
-          </div>
-          <div>
-              <a href="" class="button button--flex">
-                  Enviar mensaje
-                  <fa-icon [icon]="faCommentDots" class="button_icon"></fa-icon>
-              </a>
-          </div>
+        </div>
+        <div class="field">
+          <label for="contact-proyecto">Proyecto</label>
+          <input id="contact-proyecto" type="text" formControlName="proyecto"
+            [class.is-invalid]="f['proyecto'].invalid && f['proyecto'].touched" />
+          @if (f['proyecto'].invalid && f['proyecto'].touched) { <span class="field-error">Describe brevemente el proyecto.</span> }
+        </div>
+        <div class="field">
+          <label for="contact-mensaje">Mensaje</label>
+          <textarea id="contact-mensaje" rows="6" formControlName="mensaje"
+            [class.is-invalid]="f['mensaje'].invalid && f['mensaje'].touched"></textarea>
+          @if (f['mensaje'].invalid && f['mensaje'].touched) { <span class="field-error">El mensaje debe tener al menos 10 caracteres.</span> }
+        </div>
+        <div class="contact-submit">
+          <button type="submit" class="btn btn-primary" [disabled]="sending">
+            {{ sending ? 'Enviando…' : 'Enviar mensaje' }} <app-icon name="arrowRight" [size]="18" />
+          </button>
+          <a class="btn-text" [href]="'mailto:' + email">o escríbeme a {{ email }}</a>
+        </div>
+        @if (sent) { <p class="form-status is-ok" role="status">¡Mensaje enviado con éxito!</p> }
+        @if (error) { <p class="form-status is-error" role="alert">Ocurrió un error al enviar. Intenta de nuevo.</p> }
       </form>
+    }
 
+    <div class="socials">
+      <a class="social" [href]="profile.linkedin" target="_blank" rel="noreferrer" aria-label="LinkedIn"><app-icon name="linkedin" /></a>
+      <a class="social" [href]="profile.github" target="_blank" rel="noreferrer" aria-label="GitHub"><app-icon name="github" /></a>
+      <a class="social" [href]="profile.instagram" target="_blank" rel="noreferrer" aria-label="Instagram"><app-icon name="instagram" /></a>
+    </div>
   </div>
 </section>

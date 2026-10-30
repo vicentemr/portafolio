@@ -1,74 +1,25 @@
-<div class="todo">
+<div class="page">
   <app-header></app-header>
-  <main class="content main">
-    <div #inicio id="Inicio">
+  <main>
+    <div id="inicio">
       <app-inicio></app-inicio>
     </div>
-    <div #about id="Acerca">
+
+    <div id="sobre-mi">
       <app-about></app-about>
     </div>
 
-    <div #skill id="Habilidades">
-      <app-skill></app-skill>
-    </div>
-
-    <div #services id="Servicios">
-      <app-service></app-service>
-    </div>
-
-    <div #qualification id="Experiencia">
+    <div id="experiencia">
       <app-qualification></app-qualification>
     </div>
 
-    <div #portfolio id="Portafolio">
+    <div id="proyectos">
       <app-portfolio></app-portfolio>
-      <!-- <app-project></app-project>
-      <app-testimonial></app-testimonial> -->
     </div>
 
-    <!-- <div #project id="Poryecto">
-      <app-project></app-project>
-
-
-    </div>
-
-    <div #testimonial id="Testimonio">
-      <app-testimonial></app-testimonial>
-
-    </div> -->
-
-    <div #contact id="Contacto">
+    <div id="contacto">
       <app-contact></app-contact>
-
+      <app-footer></app-footer>
     </div>
-    <!-- <button class="top" (click)="onClick(inicio)" [ngClass]="{ visible: reachedTheEnd, hidden: !reachedTheEnd }">
-      <svg>
-        <use href="./assets/icons/icon.svg#icon-chevron-with-circle-up"></use>
-      </svg>
-    </button> -->
-    <app-footer></app-footer>
   </main>
-</div>
-
-<div class="containerColores" [ngClass]="{ mostrarBotonColor: reachedTheEnd2, ocultarBotonColor: !reachedTheEnd2 }">
-  <div class="list">
-    <button [ngClass]="{ shake: collapsed, reset: init && !collapsed }" (click)="toggle(menu)"
-      [disabled]="botonColores">
-      <span [ngClass]="{ rotate: collapsed, reset: init && !collapsed }"><fa-icon [icon]="faPalette" class="color_icon" size="sm"></fa-icon></span>
-    </button>
-    <div class="menu" #menu>
-      <span (click)="colorPurple()" class="colorPurple"><fa-icon [icon]="faPaintRoller" class="color_icon" size="xs"></fa-icon></span>
-      <span (click)="colorGreen()" class="colorGreen"><fa-icon [icon]="faPaintRoller" class="color_icon" size="xs"></fa-icon></span>
-      <span (click)="colorPink()" class="colorPink"><fa-icon [icon]="faPaintRoller" class="color_icon" size="xs"></fa-icon></span>
-      <span (click)="colorBlue()" class="colorBlue"><fa-icon [icon]="faPaintRoller" class="color_icon" size="xs"></fa-icon></span>
-
-    </div>
-  </div>
-  <svg>
-    <filter id="goo">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
-      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" />
-      <feBlend in="SourceGraphic" in2="goo" />
-    </filter>
-  </svg>
 </div>

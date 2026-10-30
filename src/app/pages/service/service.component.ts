@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './service.component.html',
-  styleUrls: ['./service.component.scss'],
+  styleUrls: ['./service.component.css'],
 })
 export class ServiceComponent implements OnInit {
   public dataServices = [
     {
       titulo1: 'Facturación Electrónica',
       titulo2: 'Implementación e integración dentro de Netsuite.',
-      icono: 'fas fa-th-large',
+      icono: 'fas fa-file-invoice',
       modalInfo: [
         {
           nombre: 'Integración con OSE.',
@@ -32,7 +32,7 @@ export class ServiceComponent implements OnInit {
     {
       titulo1: 'Libros Contables',
       titulo2: 'Implementación e integración dentro de Netsuite.',
-      icono: 'fas fa-code',
+      icono: 'fas fa-book',
       modalInfo: [
         {
           nombre: 'Generación de libro contable.',
@@ -45,7 +45,7 @@ export class ServiceComponent implements OnInit {
     {
       titulo1: 'Personalización según cliente',
       titulo2: 'Implementar procesos y automatizaciones personalizadas.',
-      icono: 'fas fa-pencil-alt',
+      icono: 'fas fa-tools',
       modalInfo: [
         {
           nombre: 'Levantamiento de requerimiento.',
@@ -63,7 +63,17 @@ export class ServiceComponent implements OnInit {
     },
   ];
 
+  activeServiceIndex: number | null = null;
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  openModal(index: number): void {
+    this.activeServiceIndex = index;
+  }
+
+  closeModal(): void {
+    this.activeServiceIndex = null;
+  }
 }

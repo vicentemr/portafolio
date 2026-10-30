@@ -1,21 +1,52 @@
-<header class="header">
-  <nav class="nav containerPersonal">
-      <a (click)="changeEstadoNav('Inicio')" class="nav_logo">Portafolio</a>
-
-      <div class="nav_menu" [ngClass]="showMenu ? 'show-menu ':'hide-menu'">
-          <ul class="nav_list grid">
-              <li class="nav_item" *ngFor="let item of itemsMenu">
-                  <a (click)="changeEstadoNav(item.nombre)" class="nav_link"
-                      [ngClass]="{'active': seleccionado === item.nombre}"><i class="{{item.icono}} nav_icon"></i>
-                      {{item.nombre}}</a>
-              </li>
-          </ul>
-          <fa-icon [icon]="faTimes" (click)="openAndCloseMenu()"></fa-icon>
+<header class="nav wrap">
+  <div class="nav-pill" [class.is-scrolled]="scrolled">
+    <a class="brand" href="#inicio" (click)="changeEstadoNav($event, 'inicio')">
+      <svg class="brand-mark" viewBox="0 0 240 280" aria-hidden="true">
+        <defs>
+          <filter id="brand-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="b" />
+            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+          <clipPath id="brand-clip"><rect y="40" width="240" height="240" /></clipPath>
+          <path id="brand-shape" [attr.d]="brandShape" />
+          <mask id="brand-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="280">
+            <use href="#brand-shape" fill="#fff" stroke="#fff" stroke-width="1" />
+          </mask>
+        </defs>
+        <g class="brand-mark-g" clip-path="url(#brand-clip)">
+          <use class="brand-base" href="#brand-shape" />
+          <path class="brand-trail" mask="url(#brand-mask)" pathLength="100" [attr.d]="brandPath" />
+          <path class="brand-comet" pathLength="100" [attr.d]="brandPath" />
+        </g>
+      </svg>
+      Vicente Mori
+    </a>
+    <nav class="nav-links" aria-label="Secciones">
+      @for (item of itemsMenu; track item.ruta) {
+        <a [href]="'#' + item.ruta" [class.is-active]="seleccionado === item.ruta"
+          (click)="changeEstadoNav($event, item.ruta)">{{ item.nombre }}</a>
+      }
+    </nav>
+    <div class="nav-right">
+      <div class="palette" role="group" aria-label="Paleta de color">
+        @for (theme of themeService.themes; track theme.id) {
+          <button type="button" class="dot" [class.is-active]="themeService.active().id === theme.id"
+            [style.--dh]="theme.h" [style.--dc]="theme.c" [title]="theme.label"
+            [attr.aria-label]="'Paleta ' + theme.label" [attr.aria-pressed]="themeService.active().id === theme.id"
+            (click)="setPaleta(theme)"></button>
+        }
       </div>
-      <div class="nav_btns">
-          <!-- cambio de tema -->
-          <fa-icon [icon]="estadoTheme == 'inicial' ? faMoon : faSun" (click)="changeTheme()"></fa-icon>
-          <fa-icon [icon]="faBars" (click)="openAndCloseMenu()"></fa-icon>
-      </div>
+      <a class="btn btn-primary" href="#contacto" (click)="changeEstadoNav($event, 'contacto')">Hablemos</a>
+      <button class="nav-menu" type="button" [attr.aria-label]="showMenu ? 'Cerrar menú' : 'Abrir menú'"
+        [attr.aria-expanded]="showMenu" aria-controls="nav-drawer" (click)="openAndCloseMenu()">
+        <app-icon [name]="showMenu ? 'close' : 'menu'" [size]="22" />
+      </button>
+    </div>
+  </div>
+  <nav id="nav-drawer" class="nav-drawer" [class.is-open]="showMenu" aria-label="Secciones">
+    @for (item of itemsMenu; track item.ruta) {
+      <a [href]="'#' + item.ruta" [class.is-active]="seleccionado === item.ruta"
+        (click)="changeEstadoNav($event, item.ruta)">{{ item.nombre }}</a>
+    }
   </nav>
 </header>

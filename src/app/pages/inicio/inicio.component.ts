@@ -1,25 +1,24 @@
 import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { IconComponent } from '../../template/icon/icon.component';
+import { employers, profile, stats } from '../../data/portfolio.data';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [IconComponent],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
-  faComments = faComments;
+  profile = profile;
+  stats = stats;
+  employers = employers;
 
-  constructor(
-    // private readonly _navegationPageService: NavegationPagesService,
-    private scroller: ViewportScroller
-  ) { }
+  constructor(private scroller: ViewportScroller) { }
 
-  changeEstadoNav(pagina: string): void {
+  changeEstadoNav(event: Event, pagina: string): void {
+    event.preventDefault();
     this.scroller.scrollToAnchor(pagina);
-    // this._navegationPageService.navegationPages(pagina);
   }
 }

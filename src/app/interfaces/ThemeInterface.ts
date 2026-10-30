@@ -1,73 +1,15 @@
+// Paletas del diseño Órbita. Todo el color deriva de --h (tono) y --c (croma)
+// en OKLCH, así cada tinte mantiene la misma luminosidad al cambiar de tono.
 export interface Theme {
-  name: string;
-  properties: any;
+  id: string;
+  label: string;
+  h: number;
+  c: number;
 }
 
-export const defaultTheme: Theme = {
-  name: 'defaultTheme',
-  properties: {
-    '--first-color-second': 'hsl(var(--hue-color), 69%, 61%)',
-    '--title-color': 'hsl(var(--hue-color), 8%, 15%)',
-    '--text-color': 'hsl(var(--hue-color), 8%, 45%)',
-    '--input-color': 'hsl(var(--hue-color), 70%, 96%)',
-    '--body-color': 'hsl(var(--hue-color), 60%, 99%)',
-    '--scroll-bar-color': 'hsl(var(--hue-color), 12%, 90%)',
-    '--scroll-thumb-color': 'hsl(var(--hue-color), 12%, 80%)',
-    '--container-color': '#fff',
-  },
-};
+export const blue: Theme = { id: 'azul', label: 'Azul', h: 255, c: 0.19 };
+export const purple: Theme = { id: 'morado', label: 'Morado', h: 295, c: 0.19 };
+export const green: Theme = { id: 'verde', label: 'Verde', h: 155, c: 0.15 };
+export const pink: Theme = { id: 'rosa', label: 'Rosa', h: 350, c: 0.19 };
 
-export const light: Theme = {
-  name: 'light',
-  properties: {
-    '--body-bg-color': '#DCDCDC',
-    '--title-color': '#000080',
-    '--button-bg-color': '#ADD8E6',
-    '--button-border-color': '#ffffff',
-    '--button-text-color': '#FFFFFF',
-    '--magic-box-bg-color': '#ffffff',
-    '--magic-box-text-color': '#483D8B',
-  },
-};
-
-export const purple: Theme = {
-  name: 'purple',
-  properties: {
-    '--hue-color': '250',
-  },
-};
-
-export const green: Theme = {
-  name: 'green',
-  properties: {
-    '--hue-color': '142',
-  },
-};
-
-export const pink: Theme = {
-  name: 'pink',
-  properties: {
-    '--hue-color': '340',
-  },
-};
-
-export const blue: Theme = {
-  name: 'blue',
-  properties: {
-    '--hue-color': '201',
-  },
-};
-
-export const dark: Theme = {
-  name: 'dark',
-  properties: {
-    '--first-color-second': 'hsl(var(--hue-color), 30%, 8%)',
-    '--title-color': 'hsl(var(--hue-color), 8%, 95%)',
-    '--text-color': 'hsl(var(--hue-color), 8%, 75%)',
-    '--input-color': 'hsl(var(--hue-color), 29%, 16%)',
-    '--body-color': 'hsl(var(--hue-color), 28%, 12%)',
-    '--container-color': 'hsl(var(--hue-color), 29%, 16%)',
-    '--scroll-bar-color': 'hsl(var(--hue-color), 12%, 48%)',
-    '--scroll-thumb-color': 'hsl(var(--hue-color), 12%, 36%)',
-  },
-};
+export const themes: Theme[] = [blue, purple, green, pink];

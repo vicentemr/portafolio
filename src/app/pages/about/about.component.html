@@ -1,25 +1,28 @@
-<section class="about section">
-  <h2 class="section_title">Acerca de mi</h2>
-  <span class="section_subtitle">Mi Introduccion</span>
-  <div class="about_container containerPersonal grid">
-      <img src="../../../assets/img/about_me.jpg" alt="" class="about_img">
-      <div class="about_data">
-          <p class="about_descripcion">
-              Desarrollador Netsuite con experiencia en proyectos de Facturación Electrónica, Libros Contables, integraciones, personalizaciones en proyectos backend y frontend.
-          </p>
-          <div class="about_info">
-              <div>
-                  <span class="about_info-title">05+</span>
-                  <span class="about_info-name">Años <br> Experiencia</span>
-              </div>
-
-          </div>
-          <div class="about_buttons">
-              <a download="" href="../../../assets/pdf/Resume_Vicente_Mori.pdf" class="button">
-                  <fa-icon [icon]="faDownload"></fa-icon>
-                  Descargar CV
-              </a>
-          </div>
+<section class="section wrap">
+  <div class="two-col">
+    <div>
+      <div class="section-head">
+        <h2>Acerca de mí</h2>
       </div>
+      <div class="about-text">
+        @for (paragraph of about.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
+      </div>
+    </div>
+    <div>
+      <dl class="about-facts">
+        @for (fact of about.facts; track fact.label) {
+          <div>
+            <dt>{{ fact.label }}</dt>
+            <dd>{{ fact.value }}</dd>
+          </div>
+        }
+      </dl>
+      <div class="about-interests">
+        <h3>Fuera del código</h3>
+        <p>{{ about.interests }}</p>
+      </div>
+    </div>
   </div>
 </section>

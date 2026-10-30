@@ -1,123 +1,86 @@
-import { CommonModule, ViewportScroller } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faMoon, faSun, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ViewportScroller, isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, OnDestroy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ThemeServiceService } from '../../services/theme-service.service';
+import { Theme } from '../../interfaces/ThemeInterface';
+import { IconComponent } from '../icon/icon.component';
+import { BRAND_PATH, BRAND_SHAPE } from './brand-mark';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [IconComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  // private stop$ = new Subject<void>();
-  public showMenu: boolean = false;
-  public estadoTheme: string = 'inicial';
-  public seleccionado: string = 'Inicio';
-  faMoon = faMoon;
-  faSun = faSun;
-  faBars = faBars;
-  faTimes = faTimes;
+  public showMenu = false;
+  public scrolled = false;
+  public seleccionado = 'inicio';
+  public readonly brandPath = BRAND_PATH;
+  public readonly brandShape = BRAND_SHAPE;
+  private observer!: IntersectionObserver;
 
   public itemsMenu = [
-    {
-      nombre: 'Inicio',
-      icono: 'iconsminds-shop-4',
-      ruta: 'inicio',
-    },
-    {
-      nombre: 'Acerca',
-      icono: 'iconsminds-administrator',
-      ruta: 'app/portafolio/acerca',
-    },
-    {
-      nombre: 'Habilidades',
-      icono: 'iconsminds-file-clipboard-file---text',
-      ruta: 'app/portafolio/habilidades',
-    },
-    {
-      nombre: 'Servicios',
-      icono: 'iconsminds-handshake',
-      ruta: 'app/portafolio/servicios',
-    },
-    {
-      nombre: 'Experiencia',
-      icono: 'iconsminds-suitcase',
-      ruta: 'app/portafolio/cualificado',
-    },
-    // {
-    //   nombre: 'Contactame',
-    //   icono: 'iconsminds-smartphone-4',
-    //   ruta: 'app/portafolio/contactame',
-    // },
-    {
-      nombre: 'Portafolio',
-      icono: 'iconsminds-management',
-      ruta: 'app/portafolio/contactame',
-    },
-    // {
-    //   nombre: 'Proyecto',
-    //   icono: 'iconsminds-smartphone-4',
-    //   ruta: 'app/portafolio/contactame',
-    // },
-    // {
-    //   nombre: 'Testimonio',
-    //   icono: 'iconsminds-smartphone-4',
-    //   ruta: 'app/portafolio/contactame',
-    // },
-    {
-      nombre: 'Contacto',
-      icono: 'iconsminds-smartphone-4',
-      ruta: 'app/portafolio/contactame',
-    },
+    { nombre: 'Inicio', ruta: 'inicio' },
+    { nombre: 'Sobre mí', ruta: 'sobre-mi' },
+    { nombre: 'Experiencia', ruta: 'experiencia' },
+    { nombre: 'Proyectos', ruta: 'proyectos' },
+    { nombre: 'Contacto', ruta: 'contacto' },
   ];
 
   constructor(
-    // private readonly _navegationPageService: NavegationPagesService,
-    private readonly _themeService: ThemeServiceService,
-    private scroller: ViewportScroller
+    public readonly themeService: ThemeServiceService,
+    private scroller: ViewportScroller,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   ngOnInit(): void {
-    this.observarSeleccionadoDesdeOtroComponente();
+    // scrollToAnchor ignora scroll-margin: deja espacio para el header fijo.
+    this.scroller.setOffset([0, 96]);
+    this.initSectionObserver();
   }
+
   ngOnDestroy(): void {
-    this.stop();
+    if (this.observer) this.observer.disconnect();
   }
 
-  changeEstadoNav(pagina: string): void {
+  changeEstadoNav(event: Event, ruta: string): void {
+    event.preventDefault();
     this.showMenu = false;
-    this.seleccionado = pagina;
-    this.scroller.scrollToAnchor(pagina);
-    // this._navegationPageService.navegationPages(pagina);
+    this.seleccionado = ruta;
+    this.scroller.scrollToAnchor(ruta);
   }
 
-  observarSeleccionadoDesdeOtroComponente(): void {
-    // this._navegationPageService.seleccionado$
-    //   .pipe(takeUntil(this.stop$))
-    //   .subscribe((seleccionado: string) => {
-    //     this.seleccionado = seleccionado;
-    //   });
+  @HostListener('window:scroll')
+  onScroll(): void {
+    this.scrolled = window.scrollY > 12;
   }
 
   openAndCloseMenu(): void {
     this.showMenu = !this.showMenu;
   }
 
-  changeTheme(): void {
-    if (this.estadoTheme === 'inicial') {
-      this.estadoTheme = 'dark';
-      this._themeService.setDarkTheme();
-    } else {
-      this.estadoTheme = 'inicial';
-      this._themeService.setDefaultTheme();
-    }
+  setPaleta(theme: Theme): void {
+    this.themeService.setActiveTheme(theme);
   }
 
-  stop(): void {
-    // this.stop$.next();
-    // this.stop$.complete();
+  private initSectionObserver(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.seleccionado = entry.target.id;
+          }
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+
+    this.itemsMenu.forEach(item => {
+      const el = document.getElementById(item.ruta);
+      if (el) this.observer.observe(el);
+    });
   }
 }
