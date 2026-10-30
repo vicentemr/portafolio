@@ -1,0 +1,438 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <style>
+
+:root { color-scheme: dark; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; height: 100%; }
+body { background: #101114; }
+.page {
+  --h: 255; --c: 0.19;
+  --bg: oklch(0.145 0.012 var(--h));
+  --bg-2: oklch(0.18 0.014 var(--h));
+  --bg-3: oklch(0.215 0.016 var(--h));
+  --line: oklch(1 0 0 / 0.08);
+  --line-2: oklch(1 0 0 / 0.16);
+  --text: oklch(0.965 0.005 var(--h));
+  --text-2: oklch(0.74 0.012 var(--h));
+  --text-3: oklch(0.66 0.012 var(--h));
+  --accent: oklch(0.55 var(--c) var(--h));
+  --accent-hover: oklch(0.6 var(--c) var(--h));
+  --accent-2: oklch(0.8 calc(var(--c) * 0.7) var(--h));
+  --accent-soft: oklch(0.55 var(--c) var(--h) / 0.14);
+  --accent-glow: oklch(0.6 var(--c) var(--h) / 0.32);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4 { margin: 0; font-family: var(--display-font); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+a { color: var(--accent-2); text-decoration: none; transition: color 0.2s var(--ease); }
+a:hover { color: var(--text); }
+ul { margin: 0; padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+::selection { background: oklch(0.55 var(--c) var(--h) / 0.45); color: var(--text); }
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 6px; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 999px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-track { background: transparent; }
+.wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 12px; font-weight: 600; font-size: 15px; line-height: 1; white-space: nowrap; transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease); }
+.btn svg { flex: none; transition: transform 0.25s var(--ease); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-hover); color: #fff; transform: translateY(-1px); }
+.btn-primary:hover svg { transform: translateX(3px); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line-2); }
+.btn-ghost:hover { border-color: var(--text-2); background: oklch(1 0 0 / 0.04); color: var(--text); }
+.btn-ghost:hover svg { transform: translateX(3px); }
+.btn-text { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); font-weight: 500; font-size: 15px; }
+.btn-text:hover { color: var(--text); }
+.chip { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 14px 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-2); color: var(--text-2); font-size: 14px; font-weight: 500; transition: border-color 0.2s var(--ease), color 0.2s var(--ease), background-color 0.2s var(--ease); }
+.chip img { width: 20px; height: 20px; filter: grayscale(1) brightness(1.35); opacity: 0.8; transition: filter 0.25s var(--ease), opacity 0.25s var(--ease); }
+.chip:hover { border-color: var(--line-2); color: var(--text); background: var(--bg-3); }
+.chip:hover img { filter: none; opacity: 1; }
+.tag { display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 8px; background: var(--accent-soft); color: var(--accent-2); font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em; }
+.social { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); color: var(--text-2); transition: border-color 0.2s var(--ease), color 0.2s var(--ease), background-color 0.2s var(--ease); }
+.social:hover { color: var(--text); border-color: var(--line-2); background: var(--bg-2); }
+.palette { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 999px; border: 1px solid var(--line); }
+.dot { width: 18px; height: 18px; border-radius: 50%; background: oklch(0.6 var(--dc) var(--dh)); border: 2px solid transparent; box-shadow: 0 0 0 1px oklch(1 0 0 / 0.08) inset; transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+.dot:hover { transform: scale(1.12); }
+.dot.is-active { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px oklch(0.6 var(--dc) var(--dh)); }
+.flow { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+.flow-node { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--line-2); background: var(--bg); color: var(--text); font-size: 13px; font-weight: 600; }
+.flow-node.is-accent { border-color: transparent; background: var(--accent); color: #fff; }
+.flow-arrow { color: var(--text-3); display: inline-flex; }
+.flow-arrow svg { width: 18px; height: 18px; }
+.reveal { animation: rise 0.9s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (max-width: 480px) {
+  .flow { gap: 6px; }
+  .flow-node { font-size: 12px; padding: 0 9px; min-height: 30px; }
+  .flow-arrow svg { width: 16px; height: 16px; }
+  .actions .btn { flex: 1 1 auto; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .reveal { animation: none; } * { transition-duration: 0.01ms !important; } }
+
+
+.page { --display-font: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif; --body-font: 'Hanken Grotesk', 'Segoe UI', system-ui, sans-serif; overflow-x: clip; }
+h1, h2, h3 { font-optical-sizing: auto; }
+
+/* Nav */
+.nav-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 84px; }
+.brand { font-family: var(--display-font); font-weight: 700; font-size: 19px; letter-spacing: -0.02em; color: var(--text); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 14.5px; font-weight: 500; color: var(--text-2); }
+.nav-links a:hover, .nav-links a.is-active { color: var(--text); }
+.nav-links a.is-cta { color: var(--accent-2); display: inline-flex; align-items: center; gap: 6px; }
+.nav-links a.is-cta:hover { color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-menu { display: none; width: 44px; height: 44px; border-radius: 12px; color: var(--text); align-items: center; justify-content: center; border: 1px solid var(--line); }
+
+/* Hero */
+.hero { padding: 72px 0 0; }
+.hero h1 { font-size: clamp(44px, 6.4vw, 88px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.98; }
+.hero h1 span { display: block; color: var(--text-3); font-weight: 600; }
+.hero-grid { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 64px; align-items: start; }
+.hero .lead { font-size: 21px; line-height: 1.5; color: var(--text-2); max-width: 44ch; }
+.facts { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 14.5px; color: var(--text-3); }
+.facts li { display: flex; align-items: center; gap: 10px; }
+.facts li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); }
+.hero .actions { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.hero .actions .btn { min-height: 52px; padding: 0 24px; }
+.hero .socials { margin-left: 8px; display: flex; gap: 8px; }
+.hero .socials .social { width: 40px; height: 40px; border-radius: 10px; }
+
+.panel { position: relative; height: 540px; border-radius: 20px; overflow: hidden; background: linear-gradient(160deg, oklch(0.34 calc(var(--c) * 0.5) var(--h)) 0%, oklch(0.19 calc(var(--c) * 0.35) var(--h)) 100%); }
+.panel::after { content: ''; position: absolute; inset: auto 0 0; height: 40%; background: linear-gradient(180deg, transparent, oklch(0.12 0.012 var(--h) / 0.7)); pointer-events: none; }
+.panel img { position: absolute; left: 50%; bottom: 0; height: 92%; width: auto; transform: translateX(-50%); filter: grayscale(1) contrast(1.05) brightness(0.96); transition: filter 0.6s var(--ease); }
+.panel:hover img { filter: none; }
+.panel-foot { position: absolute; z-index: 2; left: 22px; right: 22px; bottom: 20px; display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--text-2); }
+.panel-foot b { font-weight: 600; color: var(--text); }
+
+/* Sections */
+.section { padding-top: 140px; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+.section h2 { font-size: 48px; font-weight: 700; letter-spacing: -0.03em; }
+.section-head p { color: var(--text-2); font-size: 17px; max-width: 44ch; }
+
+.rows { border-top: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: 180px minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 26px 0; border-bottom: 1px solid var(--line); transition: padding-left 0.3s var(--ease); }
+.row:hover { padding-left: 8px; }
+.row .years { font-size: 14.5px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.row .role { font-family: var(--display-font); font-weight: 600; font-size: 24px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.row .co { font-size: 16px; color: var(--text-2); }
+
+.tools { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: start; }
+.tools p { margin-top: 16px; color: var(--text-2); font-size: 17px; max-width: 34ch; }
+.stack-group + .stack-group { margin-top: 24px; }
+.stack-group h3 { font-family: var(--body-font); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
+.stack-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.certs { margin-top: 56px; border-top: 1px solid var(--line); }
+.certs .row { grid-template-columns: 180px minmax(0, 1.3fr) minmax(0, 1fr); padding: 18px 0; }
+.certs .row .role { font-size: 17px; font-family: var(--body-font); font-weight: 600; letter-spacing: -0.01em; }
+
+/* Projects */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.card { display: flex; flex-direction: column; gap: 22px; padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: var(--bg-2); transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease), transform 0.25s var(--ease); }
+.card:hover { border-color: var(--line-2); background: var(--bg-3); transform: translateY(-3px); }
+.card.is-featured { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 48px; padding: 40px; }
+.card-media { display: flex; align-items: center; justify-content: center; min-height: 128px; padding: 22px; border-radius: 14px; background: var(--bg); }
+.card.is-featured .card-media { min-height: 220px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.card h3 { margin-top: 16px; font-size: 28px; font-weight: 600; letter-spacing: -0.025em; }
+.card.is-featured h3 { font-size: 38px; }
+.card p { margin-top: 12px; font-size: 16px; line-height: 1.55; color: var(--text-2); max-width: 50ch; }
+.card-link { margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--text); }
+.card-link svg { transition: transform 0.25s var(--ease); color: var(--accent-2); }
+.card:hover .card-link svg { transform: translate(2px, -2px); }
+
+/* Contact */
+.cta { margin-top: 140px; padding-top: 56px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end; }
+.cta h2 { font-size: clamp(48px, 6.4vw, 88px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.98; }
+.cta p { font-size: 17px; color: var(--text-2); max-width: 40ch; }
+.cta .actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.cta .actions .btn { min-height: 52px; padding: 0 24px; }
+.cta .socials { margin-top: 28px; display: flex; gap: 8px; }
+.footer { margin-top: 96px; padding: 24px 0 40px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--text-3); }
+.footer a { color: var(--text-3); }
+.footer a:hover { color: var(--text); }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr) 400px; gap: 40px; }
+  .panel { height: 480px; }
+  .tools { gap: 40px; }
+}
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-menu { display: inline-flex; }
+  .nav-in { min-height: 72px; }
+  .hero { padding-top: 40px; }
+  .hero-grid { margin-top: 36px; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .hero .lead { font-size: 18px; }
+  .panel { height: 420px; }
+  .section { padding-top: 88px; }
+  .section h2 { font-size: 36px; }
+  .row { grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 20px 0; }
+  .row .role { font-size: 20px; }
+  .certs .row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .tools { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .projects { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .card, .card.is-featured { display: flex; padding: 22px; gap: 18px; }
+  .card.is-featured .card-media { min-height: 128px; }
+  .card h3, .card.is-featured h3 { font-size: 24px; }
+  .card-media { padding: 16px; }
+  .cta { margin-top: 88px; grid-template-columns: minmax(0, 1fr); gap: 24px; padding-top: 40px; }
+  .footer { margin-top: 64px; flex-direction: column; align-items: flex-start; }
+}
+
+  </style>
+</helmet>
+<div class="page" style="--h: {{h}}; --c: {{c}}">
+
+<header class="wrap nav-in">
+  <a class="brand" href="#inicio">Vicente Mori</a>
+  <div class="nav-right">
+    <nav class="nav-links" aria-label="Secciones">
+      <a class="is-active" href="#inicio">Inicio</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#proyectos">Proyectos</a>
+      <a class="is-cta" href="#contacto">Contacto <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+    </nav>
+    <div class="palette " role="group" aria-label="Paleta de color"><button type="button" class="dot {{dotCls.azul}}" style="--dh: 255; --dc: 0.19" title="Azul" aria-label="Paleta Azul" onClick="{{pick.azul}}"></button><button type="button" class="dot {{dotCls.morado}}" style="--dh: 295; --dc: 0.19" title="Morado" aria-label="Paleta Morado" onClick="{{pick.morado}}"></button><button type="button" class="dot {{dotCls.verde}}" style="--dh: 155; --dc: 0.15" title="Verde" aria-label="Paleta Verde" onClick="{{pick.verde}}"></button><button type="button" class="dot {{dotCls.rosa}}" style="--dh: 350; --dc: 0.19" title="Rosa" aria-label="Paleta Rosa" onClick="{{pick.rosa}}"></button></div>
+    <button class="nav-menu" type="button" aria-label="Abrir menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap" id="inicio">
+    <h1 class="reveal" style="--i: 0">Vicente Mori,<span>desarrollador NetSuite.</span></h1>
+    <div class="hero-grid">
+      <div>
+        <p class="lead reveal" style="--i: 1">Más de 5 años implementando NetSuite —facturación electrónica, libros contables PLE e integraciones— con backend en Spring Boot y frontend en Angular.</p>
+        <ul class="facts reveal" style="--i: 2">
+          <li>Más de 5 años en NetSuite</li>
+          <li>10+ proyectos entregados</li>
+          <li>3 certificaciones</li>
+        </ul>
+        <div class="actions reveal" style="--i: 3">
+          <a class="btn btn-primary" href="#contacto">Contáctame <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+          <a class="btn btn-ghost" href="#proyectos">Ver proyectos</a>
+          <div class="socials">
+<a class="social" href="https://www.linkedin.com/in/vicente-mori-343717179/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 8.75H3.6V20h2.9V8.75ZM5.05 3.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4ZM20.4 13.85c0-3.2-1.7-5.35-4.55-5.35-1.6 0-2.7.8-3.2 1.7v-1.45H9.8V20h2.9v-6.1c0-1.55.75-2.6 2.15-2.6 1.3 0 1.9.9 1.9 2.6V20h2.9v-6.15Z"></path></svg></a>
+<a class="social" href="#" target="_blank" rel="noreferrer" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5a9.7 9.7 0 0 0-3.07 18.9c.49.09.66-.21.66-.47v-1.7c-2.7.59-3.27-1.15-3.27-1.15-.44-1.12-1.08-1.42-1.08-1.42-.88-.6.07-.59.07-.59.97.07 1.49 1 1.49 1 .87 1.49 2.28 1.06 2.83.81.09-.63.34-1.06.62-1.3-2.15-.25-4.42-1.08-4.42-4.8 0-1.06.38-1.93 1-2.6-.1-.25-.43-1.24.1-2.58 0 0 .81-.26 2.67 1a9.2 9.2 0 0 1 4.86 0c1.85-1.26 2.66-1 2.66-1 .53 1.34.2 2.33.1 2.58.62.67 1 1.54 1 2.6 0 3.73-2.27 4.55-4.44 4.79.35.3.66.9.66 1.81v2.68c0 .26.17.57.67.47A9.7 9.7 0 0 0 12 2.5Z"></path></svg></a>
+<a class="social" href="https://www.instagram.com/vicentemori/" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"></rect><circle cx="12" cy="12" r="3.75"></circle><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"></circle></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="panel reveal" style="--i: 2">
+        <img src="perfil.webp" alt="Retrato de Vicente Mori">
+        <div class="panel-foot"><span><b>Ingeniería de Sistemas</b> · UNMSM</span><span>Lima, Perú</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="experiencia">
+    <div class="section-head">
+      <h2>Experiencia</h2>
+      <a class="btn-text" href="assets/pdf/Resume_Vicente_Mori.pdf" download=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="m7 10 5 5 5-5"></path><path d="M5 19h14"></path></svg> Descargar CV</a>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <span class="years">Mar 2023 — actualidad</span>
+        <span class="role">Software Engineer, NetSuite<span class="tag">Actual</span></span>
+        <span class="co">BRING IT</span>
+      </div>
+      <div class="row">
+        <span class="years">Jun 2022 — Mar 2023</span>
+        <span class="role">Technology Analyst</span>
+        <span class="co">Infosys</span>
+      </div>
+      <div class="row">
+        <span class="years">Feb 2022 — Jun 2022</span>
+        <span class="role">Senior Developer</span>
+        <span class="co">Keep It Simple</span>
+      </div>
+      <div class="row">
+        <span class="years">Abr 2021 — Ene 2022</span>
+        <span class="role">NetSuite Developer</span>
+        <span class="co">Keep It Simple</span>
+      </div>
+      <div class="row">
+        <span class="years">Dic 2020 — Mar 2021</span>
+        <span class="role">Java Programmer Analyst</span>
+        <span class="co">Entelgy</span>
+      </div>
+      <div class="row">
+        <span class="years">Ene 2019 — Dic 2020</span>
+        <span class="role">SuiteCloud Developer</span>
+        <span class="co">LatamReady</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="tools">
+      <div>
+        <h2>Herramientas</h2>
+        <p>El stack con el que entrego: NetSuite en el centro, Java y Spring Boot detrás, Angular al frente.</p>
+      </div>
+      <div>
+        <div class="stack-group">
+          <h3>NetSuite</h3>
+          <div class="stack-list">
+            <span class="chip"><img src="netsuite.svg" alt="">SuiteScript</span>
+            <span class="chip"><img src="netsuite.svg" alt="">SuiteCloud</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>Backend</h3>
+          <div class="stack-list">
+            <span class="chip"><img src="java.svg" alt="">Java</span>
+            <span class="chip"><img src="springboot.svg" alt="">Spring Boot</span>
+            <span class="chip"><img src="postgresql.svg" alt="">PostgreSQL</span>
+            <span class="chip"><img src="mysql.svg" alt="">MySQL</span>
+            <span class="chip"><img src="microsoft_sql_server.svg" alt="">SQL Server</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>Frontend</h3>
+          <div class="stack-list">
+            <span class="chip"><img src="angular.svg" alt="">Angular</span>
+            <span class="chip"><img src="javascript.svg" alt="">JavaScript</span>
+            <span class="chip"><img src="html.svg" alt="">HTML</span>
+            <span class="chip"><img src="css.svg" alt="">CSS</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>Herramientas</h3>
+          <div class="stack-list">
+            <span class="chip"><img src="git.svg" alt="">Git</span>
+            <span class="chip"><img src="figma.svg" alt="">Figma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="certs">
+      <div class="row">
+        <span class="years">2023</span>
+        <span class="role">NetSuite Certified SuiteFoundation</span>
+        <span class="co">Oracle NetSuite</span>
+      </div>
+      <div class="row">
+        <span class="years">2021</span>
+        <span class="role">Oracle Cloud Infrastructure Foundations</span>
+        <span class="co">Oracle</span>
+      </div>
+      <div class="row">
+        <span class="years">2021</span>
+        <span class="role">Ingeniería de Sistemas</span>
+        <span class="co">Universidad Nacional Mayor de San Marcos</span>
+      </div>
+      <div class="row">
+        <span class="years">2017</span>
+        <span class="role">International Certificate in English (FCE)</span>
+        <span class="co">Cambridge University</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="proyectos">
+    <div class="section-head">
+      <h2>Proyectos</h2>
+      <p>Trabajo reciente en NetSuite y Angular. El grid crece con cada nuevo caso.</p>
+    </div>
+    <div class="projects">
+      <article class="card is-featured">
+        
+        <div>
+          <div class="tags"><span class="tag">SuiteScript</span><span class="tag">Integración</span><span class="tag">OSE</span></div>
+          <h3>Facturación Electrónica en NetSuite</h3>
+          <p>Integración con OSE para emitir y recibir comprobantes electrónicos desde NetSuite, con envíos automatizados y archivo de los XML.</p>
+          <a class="card-link" href="#">Ver proyecto <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+        <div class="card-media"><div class="flow"><span class="flow-node">NetSuite</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node">OSE</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node is-accent">SUNAT</span></div></div>
+      </article>
+      <article class="card">
+        <div class="card-media"><div class="flow"><span class="flow-node">NetSuite</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node">PLE</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node is-accent">SUNAT</span></div></div>
+        <div>
+          <div class="tags"><span class="tag">SuiteScript</span><span class="tag">Reportes</span><span class="tag">PLE</span></div>
+          <h3>Libros Contables PLE</h3>
+          <p>Generación automatizada de libros electrónicos desde NetSuite, con reportes personalizados según los formatos que exige SUNAT.</p>
+          <a class="card-link" href="#">Ver proyecto <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+        
+      </article>
+      <article class="card">
+        <div class="card-media"><div class="flow"><span class="flow-node">Angular</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node">REST</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node is-accent">Spring Boot</span></div></div>
+        <div>
+          <div class="tags"><span class="tag">Angular 17</span><span class="tag">REST</span><span class="tag">Spring Boot</span></div>
+          <h3>Aplicación Web con Angular 17</h3>
+          <p>Frontend con componentes reutilizables, routing y consumo de APIs REST sobre un backend Spring Boot, con diseño responsive.</p>
+          <a class="card-link" href="#">Ver proyecto <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+        
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="contacto">
+    <div class="cta">
+      <h2>Hablemos.</h2>
+      <div>
+        <p>Cuéntame qué necesitas —facturación electrónica, libros contables, integraciones o una app a medida— y lo conversamos.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contacto"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"></rect><path d="m4 7 8 6 8-6"></path></svg> Escríbeme</a>
+          <a class="btn btn-ghost" href="assets/pdf/Resume_Vicente_Mori.pdf" download=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="m7 10 5 5 5-5"></path><path d="M5 19h14"></path></svg> Descargar CV</a>
+        </div>
+        <div class="socials">
+<a class="social" href="https://www.linkedin.com/in/vicente-mori-343717179/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 8.75H3.6V20h2.9V8.75ZM5.05 3.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4ZM20.4 13.85c0-3.2-1.7-5.35-4.55-5.35-1.6 0-2.7.8-3.2 1.7v-1.45H9.8V20h2.9v-6.1c0-1.55.75-2.6 2.15-2.6 1.3 0 1.9.9 1.9 2.6V20h2.9v-6.15Z"></path></svg></a>
+<a class="social" href="#" target="_blank" rel="noreferrer" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5a9.7 9.7 0 0 0-3.07 18.9c.49.09.66-.21.66-.47v-1.7c-2.7.59-3.27-1.15-3.27-1.15-.44-1.12-1.08-1.42-1.08-1.42-.88-.6.07-.59.07-.59.97.07 1.49 1 1.49 1 .87 1.49 2.28 1.06 2.83.81.09-.63.34-1.06.62-1.3-2.15-.25-4.42-1.08-4.42-4.8 0-1.06.38-1.93 1-2.6-.1-.25-.43-1.24.1-2.58 0 0 .81-.26 2.67 1a9.2 9.2 0 0 1 4.86 0c1.85-1.26 2.66-1 2.66-1 .53 1.34.2 2.33.1 2.58.62.67 1 1.54 1 2.6 0 3.73-2.27 4.55-4.44 4.79.35.3.66.9.66 1.81v2.68c0 .26.17.57.67.47A9.7 9.7 0 0 0 12 2.5Z"></path></svg></a>
+<a class="social" href="https://www.instagram.com/vicentemori/" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"></rect><circle cx="12" cy="12" r="3.75"></circle><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"></circle></svg></a>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <span>© 2026 Vicente Mori</span>
+      <a href="https://www.linkedin.com/in/vicente-mori-343717179/" target="_blank" rel="noreferrer">LinkedIn</a>
+    </footer>
+  </section>
+</main>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"paleta":{"editor":"enum","options":["Azul","Morado","Verde","Rosa"],"default":"Azul","section":"Paleta"}}'>
+
+const PALETAS = [{"id":"azul","label":"Azul","h":255,"c":0.19},{"id":"morado","label":"Morado","h":295,"c":0.19},{"id":"verde","label":"Verde","h":155,"c":0.15},{"id":"rosa","label":"Rosa","h":350,"c":0.19}];
+class Component extends DCLogic {
+  renderVals() {
+    const wanted = (this.state && this.state.paleta) || this.props.paleta || 'Azul';
+    const active = PALETAS.find((p) => p.label === wanted) || PALETAS[0];
+    const dotCls = {};
+    const pick = {};
+    for (const p of PALETAS) {
+      dotCls[p.id] = p.id === active.id ? 'is-active' : '';
+      pick[p.id] = () => this.setState({ paleta: p.label });
+    }
+    return { h: active.h, c: active.c, dotCls, pick };
+  }
+}
+
+</script>
+</body>
+</html>

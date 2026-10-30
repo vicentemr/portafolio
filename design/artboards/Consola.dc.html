@@ -1,0 +1,390 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <style>
+
+:root { color-scheme: dark; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; height: 100%; }
+body { background: #101114; }
+.page {
+  --h: 255; --c: 0.19;
+  --bg: oklch(0.145 0.012 var(--h));
+  --bg-2: oklch(0.18 0.014 var(--h));
+  --bg-3: oklch(0.215 0.016 var(--h));
+  --line: oklch(1 0 0 / 0.08);
+  --line-2: oklch(1 0 0 / 0.16);
+  --text: oklch(0.965 0.005 var(--h));
+  --text-2: oklch(0.74 0.012 var(--h));
+  --text-3: oklch(0.66 0.012 var(--h));
+  --accent: oklch(0.55 var(--c) var(--h));
+  --accent-hover: oklch(0.6 var(--c) var(--h));
+  --accent-2: oklch(0.8 calc(var(--c) * 0.7) var(--h));
+  --accent-soft: oklch(0.55 var(--c) var(--h) / 0.14);
+  --accent-glow: oklch(0.6 var(--c) var(--h) / 0.32);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4 { margin: 0; font-family: var(--display-font); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+a { color: var(--accent-2); text-decoration: none; transition: color 0.2s var(--ease); }
+a:hover { color: var(--text); }
+ul { margin: 0; padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+::selection { background: oklch(0.55 var(--c) var(--h) / 0.45); color: var(--text); }
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 6px; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 999px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-track { background: transparent; }
+.wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 12px; font-weight: 600; font-size: 15px; line-height: 1; white-space: nowrap; transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease); }
+.btn svg { flex: none; transition: transform 0.25s var(--ease); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-hover); color: #fff; transform: translateY(-1px); }
+.btn-primary:hover svg { transform: translateX(3px); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line-2); }
+.btn-ghost:hover { border-color: var(--text-2); background: oklch(1 0 0 / 0.04); color: var(--text); }
+.btn-ghost:hover svg { transform: translateX(3px); }
+.btn-text { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); font-weight: 500; font-size: 15px; }
+.btn-text:hover { color: var(--text); }
+.chip { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 14px 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg-2); color: var(--text-2); font-size: 14px; font-weight: 500; transition: border-color 0.2s var(--ease), color 0.2s var(--ease), background-color 0.2s var(--ease); }
+.chip img { width: 20px; height: 20px; filter: grayscale(1) brightness(1.35); opacity: 0.8; transition: filter 0.25s var(--ease), opacity 0.25s var(--ease); }
+.chip:hover { border-color: var(--line-2); color: var(--text); background: var(--bg-3); }
+.chip:hover img { filter: none; opacity: 1; }
+.tag { display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 8px; background: var(--accent-soft); color: var(--accent-2); font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em; }
+.social { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); color: var(--text-2); transition: border-color 0.2s var(--ease), color 0.2s var(--ease), background-color 0.2s var(--ease); }
+.social:hover { color: var(--text); border-color: var(--line-2); background: var(--bg-2); }
+.palette { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 999px; border: 1px solid var(--line); }
+.dot { width: 18px; height: 18px; border-radius: 50%; background: oklch(0.6 var(--dc) var(--dh)); border: 2px solid transparent; box-shadow: 0 0 0 1px oklch(1 0 0 / 0.08) inset; transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+.dot:hover { transform: scale(1.12); }
+.dot.is-active { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px oklch(0.6 var(--dc) var(--dh)); }
+.flow { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+.flow-node { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--line-2); background: var(--bg); color: var(--text); font-size: 13px; font-weight: 600; }
+.flow-node.is-accent { border-color: transparent; background: var(--accent); color: #fff; }
+.flow-arrow { color: var(--text-3); display: inline-flex; }
+.flow-arrow svg { width: 18px; height: 18px; }
+.reveal { animation: rise 0.9s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (max-width: 480px) {
+  .flow { gap: 6px; }
+  .flow-node { font-size: 12px; padding: 0 9px; min-height: 30px; }
+  .flow-arrow svg { width: 16px; height: 16px; }
+  .actions .btn { flex: 1 1 auto; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .reveal { animation: none; } * { transition-duration: 0.01ms !important; } }
+
+
+.page { --display-font: 'Geist', 'Segoe UI', system-ui, sans-serif; --body-font: 'Geist', 'Segoe UI', system-ui, sans-serif; --mono: 'Geist Mono', 'Cascadia Mono', Consolas, monospace; overflow-x: clip; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+
+/* Nav */
+.nav { border-bottom: 1px solid var(--line); }
+.nav-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--text); }
+.brand .mono { font-size: 12px; color: var(--text-3); font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--text-2); }
+.nav-links a:hover, .nav-links a.is-active { color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav .btn { min-height: 42px; padding: 0 18px; border-radius: 10px; font-size: 14px; }
+.nav-menu { display: none; width: 42px; height: 42px; border-radius: 10px; color: var(--text); align-items: center; justify-content: center; border: 1px solid var(--line); }
+
+/* Bento hero */
+.bento { padding-top: 48px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: auto; gap: 16px; }
+.tile { border: 1px solid var(--line); border-radius: 20px; background: var(--bg-2); transition: border-color 0.25s var(--ease); }
+.tile:hover { border-color: var(--line-2); }
+.tile-hero { grid-column: 1 / 9; padding: 44px 44px 40px; display: flex; flex-direction: column; justify-content: center; }
+.tile-hero h1 { font-size: 52px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.04; max-width: 15ch; }
+.tile-hero h1 .mark { color: var(--accent-2); }
+.tile-hero .lead { margin-top: 22px; font-size: 17px; line-height: 1.6; color: var(--text-2); max-width: 56ch; }
+.tile-hero .actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+.tile-portrait { grid-column: 9 / 13; grid-row: 1 / 3; position: relative; overflow: hidden; min-height: 560px; background: linear-gradient(180deg, oklch(0.3 calc(var(--c) * 0.55) var(--h)) 0%, oklch(0.2 calc(var(--c) * 0.4) var(--h)) 100%); }
+.tile-portrait::after { content: ''; position: absolute; inset: auto 0 0; height: 45%; background: linear-gradient(180deg, transparent, oklch(0.145 0.012 var(--h) / 0.55)); pointer-events: none; }
+.tile-portrait img { position: absolute; left: 50%; bottom: 0; height: 86%; width: auto; transform: translateX(-50%); }
+.portrait-caption { position: absolute; z-index: 2; left: 24px; top: 24px; right: 24px; display: flex; flex-direction: column; gap: 4px; }
+.portrait-caption b { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+.portrait-caption span { font-size: 12.5px; color: var(--text-2); }
+.portrait-foot { position: absolute; z-index: 2; left: 24px; right: 24px; bottom: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text-2); }
+
+.tile-exp { grid-column: 1 / 6; padding: 24px 28px 8px; }
+.tile-stack { grid-column: 6 / 9; padding: 24px 24px 24px; display: flex; flex-direction: column; }
+.tile-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.tile-title h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.015em; }
+.tile-title a { font-size: 13px; color: var(--text-3); display: inline-flex; align-items: center; gap: 6px; }
+.tile-title a:hover { color: var(--text); }
+.exp-row { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding: 11px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.exp-row .mono { font-size: 12.5px; color: var(--text-3); }
+.exp-row .role { font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.exp-row .role i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 0 3px var(--accent-soft); flex: none; }
+.exp-row .co { color: var(--text-2); }
+.logo-grid { flex: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(52px, 1fr); gap: 8px; }
+.logo-cell { min-height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease); }
+.logo-cell img { width: 24px; height: 24px; filter: grayscale(1) brightness(1.35); opacity: 0.8; transition: filter 0.25s var(--ease), opacity 0.25s var(--ease); }
+.logo-cell:hover { border-color: var(--line-2); background: var(--bg-3); }
+.logo-cell:hover img { filter: none; opacity: 1; }
+
+.certs-row { margin-top: 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.cert { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 14px; padding: 20px 22px; border-radius: 16px; border: 1px solid var(--line); background: var(--bg-2); transition: border-color 0.25s var(--ease); }
+.cert:hover { border-color: var(--line-2); }
+.cert svg { color: var(--accent-2); margin-top: 2px; }
+.cert b { display: block; font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; }
+.cert span { display: block; margin-top: 3px; font-size: 13px; color: var(--text-2); }
+.cert .mono { display: inline; color: var(--text-3); }
+
+/* Sections */
+.section { padding-top: 120px; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+.section h2 { font-size: 36px; letter-spacing: -0.03em; }
+.section-head p { color: var(--text-2); font-size: 16px; max-width: 44ch; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.card { display: flex; flex-direction: column; padding: 8px; border: 1px solid var(--line); border-radius: 20px; background: var(--bg-2); transition: border-color 0.25s var(--ease), transform 0.25s var(--ease); }
+.card:hover { border-color: var(--line-2); transform: translateY(-3px); }
+.card-media { display: flex; align-items: center; justify-content: center; min-height: 150px; padding: 24px; border-radius: 13px; background: var(--bg); }
+.card-body { display: flex; flex-direction: column; flex: 1; padding: 20px 16px 14px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.card h3 { margin-top: 14px; font-size: 19px; letter-spacing: -0.02em; }
+.card p { margin-top: 10px; font-size: 14.5px; line-height: 1.55; color: var(--text-2); }
+.card-link { margin-top: auto; padding-top: 22px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--text); }
+.card-link svg { transition: transform 0.25s var(--ease); color: var(--accent-2); }
+.card:hover .card-link svg { transform: translate(2px, -2px); }
+
+/* Contact */
+.cta { margin-top: 120px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; padding: 56px; border: 1px solid var(--line); border-radius: 24px; background: var(--bg-2); }
+.cta h2 { font-size: 40px; letter-spacing: -0.03em; max-width: 16ch; }
+.cta p { font-size: 16px; color: var(--text-2); max-width: 46ch; }
+.cta .actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+.cta .socials { margin-top: 28px; display: flex; gap: 10px; }
+.footer { margin-top: 56px; padding: 24px 0 40px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-3); }
+.footer a { color: var(--text-3); }
+.footer a:hover { color: var(--text); }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .tile-hero h1 { font-size: 44px; }
+  .tile-exp { grid-column: 1 / 7; }
+  .tile-stack { grid-column: 7 / 9; }
+  .logo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .nav-links, .nav .btn-primary, .brand .mono { display: none; }
+  .nav-menu { display: inline-flex; }
+  .bento { padding-top: 24px; gap: 12px; }
+  .tile-hero, .tile-portrait, .tile-exp, .tile-stack { grid-column: 1 / -1; grid-row: auto; }
+  .tile-hero { padding: 32px 24px 28px; }
+  .tile-hero h1 { font-size: 36px; max-width: none; }
+  .tile-hero .lead { font-size: 16px; }
+  .tile-portrait { min-height: 420px; }
+  .tile-portrait img { height: 82%; }
+  .tile-exp { padding: 20px 20px 6px; }
+  .exp-row { grid-template-columns: 78px minmax(0, 1fr); }
+  .exp-row .co { grid-column: 2; margin-top: -6px; padding-bottom: 2px; }
+  .logo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 64px; }
+  .card-media { padding: 16px; }
+  .certs-row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .section { padding-top: 80px; }
+  .section h2 { font-size: 30px; }
+  .grid-3 { grid-template-columns: minmax(0, 1fr); }
+  .cta { margin-top: 80px; grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 32px 24px; border-radius: 20px; }
+  .cta h2 { font-size: 30px; }
+  .footer { flex-direction: column; align-items: flex-start; }
+}
+
+  </style>
+</helmet>
+<div class="page" style="--h: {{h}}; --c: {{c}}">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#inicio">Vicente Mori <span class="mono">/ NetSuite · Java · Angular</span></a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a class="is-active" href="#inicio">Inicio</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-right">
+      <div class="palette " role="group" aria-label="Paleta de color"><button type="button" class="dot {{dotCls.azul}}" style="--dh: 255; --dc: 0.19" title="Azul" aria-label="Paleta Azul" onClick="{{pick.azul}}"></button><button type="button" class="dot {{dotCls.morado}}" style="--dh: 295; --dc: 0.19" title="Morado" aria-label="Paleta Morado" onClick="{{pick.morado}}"></button><button type="button" class="dot {{dotCls.verde}}" style="--dh: 155; --dc: 0.15" title="Verde" aria-label="Paleta Verde" onClick="{{pick.verde}}"></button><button type="button" class="dot {{dotCls.rosa}}" style="--dh: 350; --dc: 0.19" title="Rosa" aria-label="Paleta Rosa" onClick="{{pick.rosa}}"></button></div>
+      <a class="btn btn-primary" href="#contacto">Contactar</a>
+      <button class="nav-menu" type="button" aria-label="Abrir menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="wrap" id="inicio">
+    <div class="bento">
+      <div class="tile tile-hero reveal" style="--i: 0">
+        <h1>Soluciones <span class="mark">NetSuite</span> que facturan, integran y escalan.</h1>
+        <p class="lead">Soy Vicente Mori, ingeniero de sistemas con más de 5 años implementando NetSuite —facturación electrónica, libros contables PLE e integraciones— con backend en Spring Boot y frontend en Angular.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contacto">Contáctame <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+          <a class="btn btn-ghost" href="assets/pdf/Resume_Vicente_Mori.pdf" download=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="m7 10 5 5 5-5"></path><path d="M5 19h14"></path></svg> Descargar CV</a>
+        </div>
+      </div>
+
+      <div class="tile tile-portrait reveal" style="--i: 1">
+        <div class="portrait-caption"><b>Vicente Mori</b><span>Desarrollador NetSuite · Full Stack</span></div>
+        <img src="perfil.webp" alt="Retrato de Vicente Mori">
+        <div class="portrait-foot"><span>Lima, Perú</span><span class="mono">GMT-5</span></div>
+      </div>
+
+      <div class="tile tile-exp reveal" style="--i: 2" id="experiencia">
+        <div class="tile-title">
+          <h2>Trayectoria</h2>
+          <a href="https://www.linkedin.com/in/vicente-mori-343717179/" target="_blank" rel="noreferrer">Ver en LinkedIn <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+      <div class="exp-row">
+        <span class="mono">2023 — hoy</span>
+        <span class="role"><i></i>Software Engineer, NetSuite</span>
+        <span class="co">BRING IT</span>
+      </div>
+      <div class="exp-row">
+        <span class="mono">2022 — 23</span>
+        <span class="role">Technology Analyst</span>
+        <span class="co">Infosys</span>
+      </div>
+      <div class="exp-row">
+        <span class="mono">2022</span>
+        <span class="role">Senior Developer</span>
+        <span class="co">Keep It Simple</span>
+      </div>
+      <div class="exp-row">
+        <span class="mono">2021 — 22</span>
+        <span class="role">NetSuite Developer</span>
+        <span class="co">Keep It Simple</span>
+      </div>
+      <div class="exp-row">
+        <span class="mono">2020 — 21</span>
+        <span class="role">Java Programmer Analyst</span>
+        <span class="co">Entelgy</span>
+      </div>
+      <div class="exp-row">
+        <span class="mono">2019 — 20</span>
+        <span class="role">SuiteCloud Developer</span>
+        <span class="co">LatamReady</span>
+      </div>
+      </div>
+
+      <div class="tile tile-stack reveal" style="--i: 3">
+        <div class="tile-title"><h2>Stack</h2></div>
+        <div class="logo-grid">
+        <span class="logo-cell" title="NetSuite"><img src="netsuite.svg" alt="NetSuite"></span>
+        <span class="logo-cell" title="Java"><img src="java.svg" alt="Java"></span>
+        <span class="logo-cell" title="Spring Boot"><img src="springboot.svg" alt="Spring Boot"></span>
+        <span class="logo-cell" title="Angular"><img src="angular.svg" alt="Angular"></span>
+        <span class="logo-cell" title="JavaScript"><img src="javascript.svg" alt="JavaScript"></span>
+        <span class="logo-cell" title="PostgreSQL"><img src="postgresql.svg" alt="PostgreSQL"></span>
+        <span class="logo-cell" title="MySQL"><img src="mysql.svg" alt="MySQL"></span>
+        <span class="logo-cell" title="SQL Server"><img src="microsoft_sql_server.svg" alt="SQL Server"></span>
+        <span class="logo-cell" title="HTML"><img src="html.svg" alt="HTML"></span>
+        <span class="logo-cell" title="CSS"><img src="css.svg" alt="CSS"></span>
+        <span class="logo-cell" title="Git"><img src="git.svg" alt="Git"></span>
+        <span class="logo-cell" title="Figma"><img src="figma.svg" alt="Figma"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="certs-row reveal" style="--i: 4">
+    <div class="cert"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"></path></svg><div><b>NetSuite Certified SuiteFoundation</b><span>Oracle NetSuite · <span class="mono">2023</span></span></div></div>
+    <div class="cert"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"></path></svg><div><b>Oracle Cloud Infrastructure Foundations</b><span>Oracle · <span class="mono">2021</span></span></div></div>
+    <div class="cert"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"></circle><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"></path></svg><div><b>International Certificate in English (FCE)</b><span>Cambridge University · <span class="mono">2017</span></span></div></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="proyectos">
+    <div class="section-head">
+      <h2>Proyectos</h2>
+      <p>Trabajo reciente en NetSuite y Angular. El grid crece con cada nuevo caso.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="card-media"><div class="flow"><span class="flow-node">NetSuite</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node">OSE</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node is-accent">SUNAT</span></div></div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">SuiteScript</span><span class="tag">Integración</span><span class="tag">OSE</span></div>
+          <h3>Facturación Electrónica en NetSuite</h3>
+          <p>Integración con OSE para emitir y recibir comprobantes electrónicos desde NetSuite, con envíos automatizados y archivo de los XML.</p>
+          <a class="card-link" href="#">Ver proyecto <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-media"><div class="flow"><span class="flow-node">NetSuite</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node">PLE</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node is-accent">SUNAT</span></div></div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">SuiteScript</span><span class="tag">Reportes</span><span class="tag">PLE</span></div>
+          <h3>Libros Contables PLE</h3>
+          <p>Generación automatizada de libros electrónicos desde NetSuite, con reportes personalizados según los formatos que exige SUNAT.</p>
+          <a class="card-link" href="#">Ver proyecto <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-media"><div class="flow"><span class="flow-node">Angular</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node">REST</span><span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="flow-node is-accent">Spring Boot</span></div></div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">Angular 17</span><span class="tag">REST</span><span class="tag">Spring Boot</span></div>
+          <h3>Aplicación Web con Angular 17</h3>
+          <p>Frontend con componentes reutilizables, routing y consumo de APIs REST sobre un backend Spring Boot, con diseño responsive.</p>
+          <a class="card-link" href="#">Ver proyecto <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="contacto">
+    <div class="cta">
+      <h2>¿Tienes un proyecto NetSuite en mente?</h2>
+      <div>
+        <p>Cuéntame qué necesitas —facturación electrónica, libros contables, integraciones o una app a medida— y lo conversamos.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contacto"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"></rect><path d="m4 7 8 6 8-6"></path></svg> Escríbeme</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/vicente-mori-343717179/" target="_blank" rel="noreferrer">LinkedIn <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg></a>
+        </div>
+        <div class="socials">
+<a class="social" href="https://www.linkedin.com/in/vicente-mori-343717179/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 8.75H3.6V20h2.9V8.75ZM5.05 3.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4ZM20.4 13.85c0-3.2-1.7-5.35-4.55-5.35-1.6 0-2.7.8-3.2 1.7v-1.45H9.8V20h2.9v-6.1c0-1.55.75-2.6 2.15-2.6 1.3 0 1.9.9 1.9 2.6V20h2.9v-6.15Z"></path></svg></a>
+<a class="social" href="#" target="_blank" rel="noreferrer" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5a9.7 9.7 0 0 0-3.07 18.9c.49.09.66-.21.66-.47v-1.7c-2.7.59-3.27-1.15-3.27-1.15-.44-1.12-1.08-1.42-1.08-1.42-.88-.6.07-.59.07-.59.97.07 1.49 1 1.49 1 .87 1.49 2.28 1.06 2.83.81.09-.63.34-1.06.62-1.3-2.15-.25-4.42-1.08-4.42-4.8 0-1.06.38-1.93 1-2.6-.1-.25-.43-1.24.1-2.58 0 0 .81-.26 2.67 1a9.2 9.2 0 0 1 4.86 0c1.85-1.26 2.66-1 2.66-1 .53 1.34.2 2.33.1 2.58.62.67 1 1.54 1 2.6 0 3.73-2.27 4.55-4.44 4.79.35.3.66.9.66 1.81v2.68c0 .26.17.57.67.47A9.7 9.7 0 0 0 12 2.5Z"></path></svg></a>
+<a class="social" href="https://www.instagram.com/vicentemori/" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"></rect><circle cx="12" cy="12" r="3.75"></circle><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"></circle></svg></a>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <span>© 2026 Vicente Mori</span>
+      <span class="mono">Angular 17 · SSR</span>
+    </footer>
+  </section>
+</main>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"paleta":{"editor":"enum","options":["Azul","Morado","Verde","Rosa"],"default":"Azul","section":"Paleta"}}'>
+
+const PALETAS = [{"id":"azul","label":"Azul","h":255,"c":0.19},{"id":"morado","label":"Morado","h":295,"c":0.19},{"id":"verde","label":"Verde","h":155,"c":0.15},{"id":"rosa","label":"Rosa","h":350,"c":0.19}];
+class Component extends DCLogic {
+  renderVals() {
+    const wanted = (this.state && this.state.paleta) || this.props.paleta || 'Azul';
+    const active = PALETAS.find((p) => p.label === wanted) || PALETAS[0];
+    const dotCls = {};
+    const pick = {};
+    for (const p of PALETAS) {
+      dotCls[p.id] = p.id === active.id ? 'is-active' : '';
+      pick[p.id] = () => this.setState({ paleta: p.label });
+    }
+    return { h: active.h, c: active.c, dotCls, pick };
+  }
+}
+
+</script>
+</body>
+</html>

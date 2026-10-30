@@ -1,0 +1,90 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 3300,
+      "title": "Órbita · Desktop",
+      "expand": "fit",
+      "is_interactive": true
+    },
+    {
+      "file": "OrbitaMovil.dc.html",
+      "x": 1520,
+      "y": 0,
+      "w": 390,
+      "h": 5700,
+      "title": "Órbita · Móvil",
+      "expand": "fit",
+      "is_interactive": true
+    },
+    {
+      "file": "Consola.dc.html",
+      "x": 2030,
+      "y": 0,
+      "w": 1440,
+      "h": 2300,
+      "title": "Consola · Desktop",
+      "expand": "fit",
+      "is_interactive": true
+    },
+    {
+      "file": "ConsolaMovil.dc.html",
+      "x": 3550,
+      "y": 0,
+      "w": 390,
+      "h": 4700,
+      "title": "Consola · Móvil",
+      "expand": "fit",
+      "is_interactive": true
+    },
+    {
+      "file": "Firma.dc.html",
+      "x": 4060,
+      "y": 0,
+      "w": 1440,
+      "h": 4300,
+      "title": "Firma · Desktop",
+      "expand": "fit",
+      "is_interactive": true
+    },
+    {
+      "file": "FirmaMovil.dc.html",
+      "x": 5580,
+      "y": 0,
+      "w": 390,
+      "h": 5600,
+      "title": "Firma · Móvil",
+      "expand": "fit",
+      "is_interactive": true
+    }
+  ],
+  "annotations": [
+    {
+      "id": "nota-main",
+      "x": 0,
+      "y": -300,
+      "w": 720,
+      "text": "A · ÓRBITA — la referencia, con más disciplina.\nRetrato sobre disco luminoso, stats en órbita, nav pill. Sora + Figtree.\n+ Máximo enganche inmediato y lo más cercano a tu referencia.\n− Es la composición más vista en portafolios dev hoy; distingue por ejecución, no por estructura."
+    },
+    {
+      "id": "nota-consola",
+      "x": 2030,
+      "y": -300,
+      "w": 720,
+      "text": "B · CONSOLA — hero en mosaico, técnico y denso.\nTitular, retrato, trayectoria y stack como tiles de una grilla de 12 columnas. Geist + Geist Mono.\n+ Experiencia y herramientas literalmente en el primer pantallazo; se siente producto/ingeniería.\n− Más denso: exige disciplina de espaciado y pierde algo de aire \"premium\" en móvil."
+    },
+    {
+      "id": "nota-firma",
+      "x": 4060,
+      "y": -300,
+      "w": 720,
+      "text": "C · FIRMA — tipográfica y editorial.\nEl nombre es el héroe; retrato monocromo que recupera color al pasar el mouse; listas editoriales sin cajas. Bricolage Grotesque + Hanken Grotesk.\n+ La más elegante y distinta; envejece bien.\n− Comunica menos \"de un vistazo\": los datos llegan al hacer scroll, y depende de una buena foto."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}
