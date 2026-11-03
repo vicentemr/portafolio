@@ -18,7 +18,10 @@ export interface Project {
   title: string;
   description: string;
   tags: string[];
-  flow: string[];
+  /** Diagrama de nodos para proyectos sin vista previa. */
+  flow?: string[];
+  /** Captura del sitio, en assets/img/projects. */
+  image?: string;
   link: string;
 }
 
@@ -119,5 +122,33 @@ export const projects: Project[] = [
     tags: ['Angular 17', 'REST', 'Spring Boot'],
     flow: ['Angular', 'REST', 'Spring Boot'],
     link: '#',
+  },
+  {
+    title: 'ACPM Mala',
+    description: 'Landing de la Asociación de Criadores y Propietarios del Caballo Peruano de Paso de Mala: historia, concursos, socios y contacto por WhatsApp.',
+    tags: ['Astro', 'Landing', 'Responsive'],
+    image: 'assets/img/projects/acpm-mala.webp',
+    link: 'https://acmp-landing.vercel.app/',
+  },
+  {
+    title: 'Consulta Pediátrica',
+    description: 'Web para una consulta de pediatría en Málaga: especialidades, cursos por etapa, reserva de citas y versión multi-idioma.',
+    tags: ['Astro', 'i18n', 'Reservas'],
+    image: 'assets/img/projects/pediatra.webp',
+    link: 'https://pediatra.vercel.app/',
+  },
+  {
+    title: 'Sabores de Casa',
+    description: 'Recetario de comida peruana con filtros por ingrediente, tiempo y dificultad, conectado a una base de datos en Supabase.',
+    tags: ['Vue', 'Supabase', 'API'],
+    image: 'assets/img/projects/sabores-de-casa.webp',
+    link: 'https://food-recipes-api-sug8.vercel.app/',
+  },
+  {
+    title: 'EDcommerce',
+    description: 'Tienda en línea con catálogo de productos, carrito de compras e inicio de sesión.',
+    tags: ['React', 'Vite', 'E-commerce'],
+    image: 'assets/img/projects/ecommerce.webp',
+    link: 'https://ecommerce-one-hazel.vercel.app/',
   },
 ];
